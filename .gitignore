@@ -1,0 +1,20 @@
+# Виртуальная среда
+venv/
+.env
+
+# Файлы Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# FastAPI
+*.db
+*.sqlite
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
