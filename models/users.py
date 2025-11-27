@@ -1,12 +1,12 @@
-from pydantic import BaseModel, EmailStr
+from sqlmodel import SQLModel, Field
 from typing import Optional, List
-from models.events import Event
+from pydantic import EmailStr
 
-class User(BaseModel):
-    email: EmailStr
+class User(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    email: str = Field(unique=True, index=True)
     password: str
-    events: Optional[List[Event]] = []
-
+    events: Optional[str] = None 
     class Config:
         schema_extra = {
             "example": {
@@ -16,17 +16,19 @@ class User(BaseModel):
             }
         }
 
-class NewUser(User):
-    pass
-
-class UserSignIn(BaseModel):
+class UserCreate(SQLModel):
     email: EmailStr
     password: str
-
+    events: Optional[List[str]] = []
     class Config:
         schema_extra = {
             "example": {
                 "email": "fastapi@packt.com",
-                "password": "pass123"
+                "password": "pass123",
+                "events": []
             }
         }
+
+class UserSignIn(SQLModel):
+    email: EmailStr
+    password: str
