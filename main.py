@@ -8,6 +8,7 @@ from routes.users import user_router
 
 app = FastAPI()
 
+
 # Инициализация базы данных при запуске
 @app.on_event("startup")
 async def on_startup():
@@ -17,14 +18,18 @@ async def on_startup():
     # Инициализация Beanie
     await init_beanie(database=client.planner, document_models=[Event, User])
 
+
 # Регистрация маршрутов
 app.include_router(event_router, prefix="/event")
 app.include_router(user_router, prefix="/user")
 
+
 @app.get("/")
 async def read_root():
-    return {"message": "Здравствуйте, товарищ!"}
+    return {"message": "Здравствуй, товарищ!"}
+
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True)
